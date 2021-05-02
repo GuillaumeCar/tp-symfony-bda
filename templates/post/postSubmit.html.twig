@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(postForm) }}
+        {{ form_row(postForm.type) }}
+        {{ form_row(postForm.title) }}
+        {{ form_row(postForm.description) }}
+        {{ form_row(postForm.filepath) }}
+
+    {{ form_end(postForm) }}
+
+
+    <script>
+        document.getElementById('post_type').addEventListener('change', function () {
+            let input = document.getElementById('post_filepath');
+            switch (this.value) {
+                case 'podcast':
+                    input.type = 'text';
+                    input.value = '';
+                    input.classList.add('form-control');
+                    input.placeholder = 'Lien soundcloud';
+                    break;
+                default:
+                    input.value = '';
+                    input.type = 'file';
+                    input.classList.remove('form-control');
+            }
+        })
+    </script>
+{% endblock %}
