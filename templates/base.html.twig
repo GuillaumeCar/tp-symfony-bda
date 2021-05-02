@@ -30,6 +30,8 @@
 
 <body class="home">
     {% include 'layout/header.html.twig' %}
-    {% block body %}{% endblock %}
+    <div class="content">
+        {% block body %}{% endblock %}
+    </div>
     {% include 'layout/footer.html.twig' %}
 </body>
