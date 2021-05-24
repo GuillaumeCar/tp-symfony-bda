@@ -42,6 +42,11 @@ class Post
      */
     private $filepath;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $soundcloud;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,5 +110,21 @@ class Post
         $this->filepath = $filepath;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSoundcloud()
+    {
+        return $this->soundcloud;
+    }
+
+    /**
+     * @param mixed $soundcloud
+     */
+    public function setSoundcloud($soundcloud): void
+    {
+        $this->soundcloud = $soundcloud;
     }
 }
