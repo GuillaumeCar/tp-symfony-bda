@@ -8,23 +8,4 @@
         {{ form_row(postForm.filepath) }}
 
     {{ form_end(postForm) }}
-
-
-    <script>
-        document.getElementById('post_type').addEventListener('change', function () {
-            let input = document.getElementById('post_filepath');
-            switch (this.value) {
-                case 'podcast':
-                    input.type = 'text';
-                    input.value = '';
-                    input.classList.add('form-control');
-                    input.placeholder = 'Lien soundcloud';
-                    break;
-                default:
-                    input.value = '';
-                    input.type = 'file';
-                    input.classList.remove('form-control');
-            }
-        })
-    </script>
 {% endblock %}
