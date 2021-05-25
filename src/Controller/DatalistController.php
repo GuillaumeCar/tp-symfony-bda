@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
+use Composer\Repository\RepositoryFactory;
 use DateTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -18,12 +20,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class DatalistController extends AbstractController
 {
     /**
-     * @Route("/datalist", name="datalist")
+     * @Route("/datalist/{type}", name="datalist")
      */
-    public function index(): Response
+    public function index(string $type, PostRepository $postRepository): Response
     {
+        $list = $postRepository->findBy(array('type' => $type));
+
         return $this->render('datalist/index.html.twig', [
             'controller_name' => 'DatalistController',
+            'datalist' => $list
         ]);
     }
 

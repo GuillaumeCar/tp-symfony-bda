@@ -8,22 +8,22 @@
 
     <title>{% block title %}BDA{% endblock %}</title>
 
-    <link rel="shortcut icon" href="images/gt_favicon.png">
+    <link rel="shortcut icon" href="{{ asset('images/gt_favicon.png') }}">
 
     {% block stylesheets %}
-        <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" media="screen" href="{{ asset('http://fonts.googleapis.com/css?family=Open+Sans:300,400,700') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
         <!-- Custom styles for our template -->
-        <link rel="stylesheet" href="css/bootstrap-theme.css" media="screen" >
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.css') }}" media="screen" >
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     {% endblock %}
 
     {% block scripts %}
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
+        <script src="{{ asset('js/html5shiv.js') }}"></script>
+        <script src="{{ asset('js/respond.min.js') }}"></script>
         <![endif]-->
     {% endblock %}
 </head>
