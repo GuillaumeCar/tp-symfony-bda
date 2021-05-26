@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if message is defined and message is not empty %}
+        <div class="alert alert-warning">{{ message }}</div>
+    {% endif %}
     {% for post in posts %}
         <div class="row">
             <h3>{{ post.title }}</h3>
