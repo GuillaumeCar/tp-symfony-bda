@@ -33,6 +33,27 @@ class DatalistController extends AbstractController
     }
 
     /**
+     * @Route("/datalist/{type}/{id}", name="datalistDetails")
+     */
+    public function show(string $type, string $id, PostRepository $postRepository): Response
+    {
+        $post = $postRepository->find($id);
+
+        if ($post && $post->getType() == $type) {
+            return $this->render('datalist/details.html.twig', [
+                'post' => $post,
+                'type' => $type
+            ]);
+        }
+        $posts = $postRepository->findLatestByType();
+        return $this->render('home/index.html.twig', [
+            'message' => "Cette édition n'existe pas.",
+            'posts' => $posts
+        ]);
+
+    }
+
+    /**
      * @Route("/addPost", name="app_add_post")
      * @throws TransportExceptionInterface
      */
