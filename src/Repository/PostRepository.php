@@ -19,6 +19,25 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    /**
+     * @param $value
+     * @return mixed[][]
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function findLatestByType()
+    {
+        $query = "SELECT t1.* FROM post t1
+                     JOIN (SELECT type, MAX(date) date FROM post GROUP BY type) t2
+                          ON t1.type = t2.type AND t1.date = t2.date;";
+
+        $statement = $this->_em->getConnection()->prepare($query);
+        $result = $statement->executeQuery();
+
+        return $result->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
