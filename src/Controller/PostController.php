@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Composer\Repository\RepositoryFactory;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,17 +45,38 @@ class PostController extends AbstractController
     /**
      * @Route("/{type}/{id}", name="app_post_details")
      */
-    public function show(string $type, string $id, PostRepository $postRepository): Response
+    public function show(string $type, string $id, PostRepository $postRepository, Request $request, Session $session): Response
     {
         $post = $postRepository->find($id);
+        $commentForm = $this->createForm(CommentType::class);
+
+        $commentForm->handleRequest($request);
+
+        if($commentForm->isSubmitted()){
+            $comment = $commentForm->getData();
+
+            $comment->setPost($post)
+                ->setCreatedAt(new DateTime())
+                ->setAuthor($this->getUser());
+
+            $manager = $this->getDoctrine()->getManager();
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_post_details', ['id' => $id, 'type' => $type ]);
+        }
 
         if ($post && $post->getType() == $type) {
             return $this->render('post/details.html.twig', [
                 'post' => $post,
-                'type' => $type
+                'type' => $type,
+                'commentForm' => $commentForm->createView(),
+                'user' => $this->getUser()
             ]);
         }
         $posts = $postRepository->findLatestByType();
+
         return $this->render('home/index.html.twig', [
             'message' => "Cette édition n'existe pas.",
             'posts' => $posts
