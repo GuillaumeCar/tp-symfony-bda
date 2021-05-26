@@ -17,30 +17,38 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class DatalistController extends AbstractController
+class PostController extends AbstractController
 {
     /**
-     * @Route("/datalist/{type}", name="datalist")
+     * @Route("/{type}", name="app_posts_type")
      */
     public function index(string $type, PostRepository $postRepository): Response
     {
-        $list = $postRepository->findBy(array('type' => $type));
+        $posts = $postRepository->findBy(array('type' => $type));
 
-        return $this->render('datalist/index.html.twig', [
+        if (empty($posts)) {
+            $posts = $postRepository->findLatestByType();
+            return $this->render('home/index.html.twig', [
+                'message' => "Il n'existe pas d'édition pour ce type ou alors nous ne faisons pas encore de $type !",
+                'posts' => $posts
+            ]);
+        }
+
+        return $this->render('post/index.html.twig', [
             'controller_name' => 'DatalistController',
-            'datalist' => $list
+            'posts' => $posts
         ]);
     }
 
     /**
-     * @Route("/datalist/{type}/{id}", name="datalistDetails")
+     * @Route("/{type}/{id}", name="app_post_details")
      */
     public function show(string $type, string $id, PostRepository $postRepository): Response
     {
         $post = $postRepository->find($id);
 
         if ($post && $post->getType() == $type) {
-            return $this->render('datalist/details.html.twig', [
+            return $this->render('post/details.html.twig', [
                 'post' => $post,
                 'type' => $type
             ]);
@@ -54,7 +62,7 @@ class DatalistController extends AbstractController
     }
 
     /**
-     * @Route("/addPost", name="app_add_post")
+     * @Route("/add", name="app_add_post")
      * @throws TransportExceptionInterface
      */
     public function addPost(Request $request, SluggerInterface $slugger, MailerInterface $mailer): Response
@@ -100,7 +108,7 @@ class DatalistController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('post/postSubmit.html.twig', [
+        return $this->render('post/submit.html.twig', [
             'postForm' => $postForm->createView(),
         ]);
     }

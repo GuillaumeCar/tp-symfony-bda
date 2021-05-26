@@ -4,10 +4,10 @@
 
 {% block body %}
 <div>
-    {% for data in datalist %}
+    {% for post in posts %}
     <div class="row">
-        <h3>{{ data.title }}</h3>
-        <p>{{ data.description }}</p>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description }}</p>
     </div>
     {% endfor %}
 </div>
