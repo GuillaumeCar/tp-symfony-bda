@@ -10,4 +10,24 @@
             <img src="{{ asset('assets/' ~ post.filepath) }}" alt="{{ post.title }}"
         {% endif %}
     </div>
+
+    {% if user != null %}
+    <div class="row mt-5">
+        {{ form_start(commentForm) }}
+        {{ form_end(commentForm) }}
+    </div>
+    {% endif %}
+
+    <div class="row mt-5 comments">
+        {% for comment in post.comments %}
+            <div class="row">
+                <div class="media mb-4 mt-4 col-lg-8 col-md-10 mx-auto">
+                    <div class="media-body">
+                        <h5>{{ comment.author.username }} <small>{{ comment.createdAt|date("d/m/Y") }}</small></h5>
+                        <blockquote>{{ comment.comment }}</blockquote>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
