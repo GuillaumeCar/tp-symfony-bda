@@ -45,7 +45,7 @@ class PostController extends AbstractController
     /**
      * @Route("/{type}/{id}", name="app_post_details")
      */
-    public function show(string $type, string $id, PostRepository $postRepository, Request $request, Session $session): Response
+    public function show(string $type, string $id, PostRepository $postRepository, Request $request): Response
     {
         $post = $postRepository->find($id);
         $commentForm = $this->createForm(CommentType::class);
