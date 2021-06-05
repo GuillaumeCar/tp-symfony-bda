@@ -116,8 +116,6 @@ class PostController extends AbstractController
                     }
                     $post->setFilepath($newFilename);
                 }
-            } else {
-                $post->setFilepath($post->getSoundcloud());
             }
 
             $post->setDate(new DateTime());

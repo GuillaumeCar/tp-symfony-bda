@@ -6,8 +6,10 @@
         <p>{{ post.description }}</p>
         {% if type == 'journal' %}
             <embed src="{{ asset('assets/' ~ post.filepath) }}" type="application/pdf" width="100%" height="650em">
-        {% else %}
+        {% elseif type == 'newsletter' %}
             <img src="{{ asset('assets/' ~ post.filepath) }}" alt="{{ post.title }}"
+        {% else %}
+            {{ post.soundcloud | raw }}
         {% endif %}
     </div>
 

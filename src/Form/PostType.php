@@ -35,7 +35,7 @@ class PostType extends AbstractType
                 'required' => false
             ])
             ->add('soundcloud', TextType::class, [
-                'label' => 'Lien Soundcloud (podcasts)',
+                'label' => 'Lien soundcloud embarqué (Share -> Embed)',
                 'required' => false
             ])
             ->add('submit', SubmitType::class)
