@@ -22,7 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/{type}", name="app_posts_type")
+     * @Route("/posts/{type}", name="app_posts_type")
      */
     public function index(string $type, PostRepository $postRepository): Response
     {
@@ -43,7 +43,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{type}/{id}", name="app_post_details")
+     * @Route("/posts/{type}/{id}", name="app_post_details")
      */
     public function show(string $type, string $id, PostRepository $postRepository, Request $request): Response
     {
