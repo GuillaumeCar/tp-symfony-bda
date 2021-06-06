@@ -43,6 +43,8 @@ class UserController extends AbstractController
 
             $manager->flush();
 
+            $this->addFlash('success', 'Profil mis à jour !');
+
             return $this->redirectToRoute('app_user_edit');
         }
 
