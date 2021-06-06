@@ -8,8 +8,6 @@
 
     <title>{% block title %}BDA{% endblock %}</title>
 
-    <link rel="shortcut icon" href="{{ asset('images/gt_favicon.png') }}">
-
     {% block stylesheets %}
         <link rel="stylesheet" media="screen" href="{{ asset('http://fonts.googleapis.com/css?family=Open+Sans:300,400,700') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -25,11 +23,11 @@
         <script src="{{ asset('js/html5shiv.js') }}"></script>
         <script src="{{ asset('js/respond.min.js') }}"></script>
         <![endif]-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% endblock %}
 </head>
 
 <body class="home">
-    {% include 'layout/header.html.twig' %}
     <div class="content">
         {% block body %}{% endblock %}
     </div>

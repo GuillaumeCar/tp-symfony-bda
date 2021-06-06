@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DatalistController!{% endblock %}
-
 {% block body %}
-<div>
-    {% for post in posts %}
-    <div class="row">
-        <a href={{ "/posts/" ~ post.type ~ "/" ~ post.id }}>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.description }}</p>
-        </a>
+    {% include 'layout/header.html.twig' %}
+
+    {% if posts[0].type == 'journal' %}
+        <h2>Ch'ti Marcel</h2>
+    {% elseif posts[0].type == 'newsletter' %}
+        <h2>Newsletters</h2>
+    {% elseif posts[0].type == 'podcast' %}
+        <h2>Podcasts</h2>
+    {% endif %}
+    <div>
+        {% for post in posts %}
+        <div class="row">
+            <a href={{ "/posts/" ~ post.type ~ "/" ~ post.id }}>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.description }}</p>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}

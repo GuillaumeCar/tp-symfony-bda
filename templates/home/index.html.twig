@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'layout/header.html.twig' %}
+    <h2>Home</h2>
     {% if message is defined and message is not empty %}
         <div class="alert alert-warning">{{ message }}</div>
     {% endif %}

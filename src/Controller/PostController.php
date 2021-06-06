@@ -38,7 +38,8 @@ class PostController extends AbstractController
 
         return $this->render('post/index.html.twig', [
             'controller_name' => 'DatalistController',
-            'posts' => $posts
+            'posts' => $posts,
+            'user' => $this->getUser()
         ]);
     }
 
@@ -79,7 +80,8 @@ class PostController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'message' => "Cette édition n'existe pas.",
-            'posts' => $posts
+            'posts' => $posts,
+            'user' => $this->getUser()
         ]);
 
     }
@@ -126,11 +128,12 @@ class PostController extends AbstractController
 
             $this->broadcastMail($post, $mailer);
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('post/submit.html.twig', [
             'postForm' => $postForm->createView(),
+            'user' => $this->getUser()
         ]);
     }
 

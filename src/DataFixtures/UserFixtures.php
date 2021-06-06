@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
         $user->setUsername('toto');
         $user->setName('toto');
         $user->setSurname('toto');
-        $user->setRoles(['admin', 'user']);
+        $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword(
             $this->passwordEncoder->encodePassword(
             $user,
@@ -36,7 +36,7 @@ class UserFixtures extends Fixture
         $user2->setUsername('titi');
         $user2->setName('titi');
         $user2->setSurname('titi');
-        $user2->setRoles(['user']);
+        $user2->setRoles([]);
         $user2->setPassword(
             $this->passwordEncoder->encodePassword(
                 $user2,
@@ -46,5 +46,5 @@ class UserFixtures extends Fixture
         $manager->persist($user2);
 
         $manager->flush();
-        }
+    }
 }
