@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Composer\Repository\RepositoryFactory;
+use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,15 +21,27 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class PostController extends AbstractController
 {
+    /** @var PostRepository */
+    protected $postRepository;
+
+    /** @var UserRepository */
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository, PostRepository $postRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * @Route("/posts/{type}", name="app_posts_type")
      */
-    public function index(string $type, PostRepository $postRepository): Response
+    public function index(string $type): Response
     {
-        $posts = $postRepository->findBy(array('type' => $type));
+        $posts = $this->postRepository->findBy(array('type' => $type));
 
         if (empty($posts)) {
-            $posts = $postRepository->findLatestByType();
+            $posts = $this->postRepository->findLatestByType();
             return $this->render('home/index.html.twig', [
                 'message' => "Il n'existe pas d'édition pour ce type ou alors nous ne faisons pas encore de $type !",
                 'posts' => $posts
@@ -45,9 +58,9 @@ class PostController extends AbstractController
     /**
      * @Route("/posts/{type}/{id}", name="app_post_details")
      */
-    public function show(string $type, string $id, PostRepository $postRepository, Request $request): Response
+    public function show(string $type, string $id, Request $request): Response
     {
-        $post = $postRepository->find($id);
+        $post = $this->postRepository->find($id);
         $commentForm = $this->createForm(CommentType::class);
 
         $commentForm->handleRequest($request);
@@ -75,7 +88,7 @@ class PostController extends AbstractController
                 'user' => $this->getUser()
             ]);
         }
-        $posts = $postRepository->findLatestByType();
+        $posts = $this->postRepository->findLatestByType();
 
         return $this->render('home/index.html.twig', [
             'message' => "Cette édition n'existe pas.",
@@ -143,8 +156,16 @@ class PostController extends AbstractController
     {
         $emailTemplate = sprintf('email/%s.html.twig', $post->getType());
 
+        $users = $this->userRepository->findAll();
+
+        $mailingList = [];
+        /** @var User $user */
+        foreach($users as $user) {
+            $mailingList[] = $user->getUsername();
+        }
+
         $email = (new TemplatedEmail())
-            ->from('fabien@example.com')
+            ->from('no-reply@bda-ig2i.com')
             ->to('ryan@example.com')
             ->subject($post->getTitle())
             ->htmlTemplate($emailTemplate)

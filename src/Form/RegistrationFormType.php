@@ -22,21 +22,24 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Ce champ est obligatoire',
                     ])
-                ]
+                ],
+                'label' => 'Adresse mail'
             ])
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est obligatoire',
                     ])
-                ]
+                ],
+                'label' => 'Nom'
             ])
             ->add('surname', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est obligatoire',
                     ])
-                ]
+                ],
+                'label' => 'Prénom'
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -50,7 +53,7 @@ class RegistrationFormType extends AbstractType
                         'min' => 6,
                         'minMessage' => 'Le mot de passe doit faire {{ limit }} caractères minimum.',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'max' => 64,
                     ]),
                 ],
             ])

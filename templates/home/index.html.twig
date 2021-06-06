@@ -8,6 +8,7 @@
     {% endif %}
     {% for post in posts %}
         <div class="row">
+            <h3>{{ post.type | capitalize }}</h3>
             <a href={{ "/posts/" ~ post.type ~ "/" ~ post.id }}>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.description }}</p>
