@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
+    {% include 'layout/header.html.twig' %}
     {{ form_start(postForm) }}
         {{ form_row(postForm.type) }}
         {{ form_row(postForm.title) }}

@@ -1,17 +1,27 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url('home') }}">BDA</a>
+            <a class="navbar-brand" href="{{ url('app_home') }}">BDA</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="{{ url('home') }}">Home</a></li>
+            <li><a href="{{ url('app_home') }}">Home</a></li>
             <li><a href="/posts/journal">Ch'ti Marcel</a></li>
             <li><a href="/posts/newsletter">Newsletters</a></li>
             <li><a href="/posts/podcast">Podcast</a></li>
+            {% if user is defined and user is not null and 'ROLE_ADMIN' in user.roles %}
+                <li><a href="{{ url('app_add_post') }}">Upload</a></li>
+            {% endif %}
         </ul>
+        {% if user is not defined or user is null %}
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ url('app_login') }}"><span class="glyphicon glyphicon-user"></span>Sign in</a></li>
             <li><a href="{{ url('app_register') }}"><span class="glyphicon glyphicon-log-in"></span>Sign Up</a></li>
         </ul>
+        {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('app_login') }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                <li><a href="{{ url('app_logout') }}"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+            </ul>
+        {% endif %}
     </div>
 </nav>

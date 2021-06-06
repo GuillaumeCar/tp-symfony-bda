@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="app_home")
      * @throws \Doctrine\DBAL\Exception
      */
     public function index(PostRepository $postRepository): Response
@@ -23,7 +23,8 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/index.html.twig', [
-            'posts' => $posts
+            'posts' => $posts,
+            'user' => $this->getUser()
         ]);
     }
 }
