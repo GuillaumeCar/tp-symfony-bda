@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,7 +52,7 @@ class PostController extends AbstractController
 
         $commentForm->handleRequest($request);
 
-        if($commentForm->isSubmitted()){
+        if($commentForm->isSubmitted() && $commentForm->isValid()){
             $comment = $commentForm->getData();
 
             $comment->setPost($post)

@@ -20,7 +20,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUsername('toto');
+        $user->setUsername('toto@toto.com');
         $user->setName('toto');
         $user->setSurname('toto');
         $user->setRoles(['ROLE_ADMIN']);
@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
         $manager->persist($user);
 
         $user2 = new User();
-        $user2->setUsername('titi');
+        $user2->setUsername('titi@titi.com');
         $user2->setName('titi');
         $user2->setSurname('titi');
         $user2->setRoles([]);

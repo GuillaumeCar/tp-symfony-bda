@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'layout/header.html.twig' %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for userData in users %}
+                <tr class="row">
+                    <td>{{ userData.id }}</td>
+                    <td>{{ userData.username }}</td>
+                    <td>{{ userData.name }}</td>
+                    <td>{{ userData.surname }}</td>
+                    <td>
+                        <label for="is-admin">Admin</label>
+                        <input disabled type="checkbox" name="is-admin" id="is-admin" {% if 'ROLE_ADMIN' in userData.roles %} checked {% endif %}>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

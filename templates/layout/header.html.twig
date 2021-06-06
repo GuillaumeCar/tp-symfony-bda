@@ -10,17 +10,18 @@
             <li><a href="/posts/podcast">Podcast</a></li>
             {% if user is defined and user is not null and 'ROLE_ADMIN' in user.roles %}
                 <li><a href="{{ url('app_add_post') }}">Upload</a></li>
+                <li><a href="{{ url('app_user_list') }}">Admin</a></li>
             {% endif %}
         </ul>
         {% if user is not defined or user is null %}
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('app_login') }}"><span class="glyphicon glyphicon-user"></span>Sign in</a></li>
-            <li><a href="{{ url('app_register') }}"><span class="glyphicon glyphicon-log-in"></span>Sign Up</a></li>
+            <li><a href="{{ url('app_login') }}">Sign in</a></li>
+            <li><a href="{{ url('app_register') }}">Sign Up</a></li>
         </ul>
         {% else %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('app_login') }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                <li><a href="{{ url('app_logout') }}"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+                <li><a href="{{ url('app_user_edit') }}">Profile</a></li>
+                <li><a href="{{ url('app_logout') }}">Logout</a></li>
             </ul>
         {% endif %}
     </div>
