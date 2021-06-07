@@ -19,13 +19,16 @@ Une fois le projet récupéré, vous allez pouvoir configurer le projet, notamme
 
 ```
 # .env
-DATABASE_URL="postgresql://symfony:symfony@127.0.0.1:5432/bda?serverVersion=12.6&charset=utf8"
+DATABASE_URL="postgresql://symfony:symfony@127.0.0.1:5432/archive-bda?serverVersion=12.6&charset=utf8"
 ```
 
-Maintenant, on peut installer les dépendances du projet via composer :
+Maintenant, on peut installer les dépendances du projet via composer, créer la base de données et charger les fixtures :
 
 ```bash
 composer update
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 ```
 
 Composer installe toute nos dépendances selon celles qui sont définies dans le fichier `composer.json`.
@@ -33,7 +36,7 @@ Composer installe toute nos dépendances selon celles qui sont définies dans le
 Nous utilisons un système de mailing pour notre projet mais utilisons mailhog pour le moment. Pour installer mailhog, veuillez vous référer à la documentation du projet : https://github.com/mailhog/MailHog
 *Mailhog* permet un client web à l'adresse `localhost:8025` 
 
-On peut maintenant démarrer le projet via la commande suivante :
+On peut maintenant et démarrer le projet via la commande suivante :
 
 ```shell
 sudo symfony server:start
