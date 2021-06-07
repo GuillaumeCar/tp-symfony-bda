@@ -35,7 +35,7 @@ class PostFixtures extends Fixture
             } else if ('journal' === $post->getType()) {
                 $post->setFilepath("fichier.pdf");
             } else {
-                $post->setFilepath("telechargement.pdf");
+                $post->setFilepath("telechargement.jpg");
             }
 
             for($j = 0; $j < rand(2,7); $j++){
