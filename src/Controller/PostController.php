@@ -152,7 +152,7 @@ class PostController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    public function broadcastMail(Post $post, MailerInterface $mailer)
+public function broadcastMail(Post $post, MailerInterface $mailer)
     {
         $emailTemplate = sprintf('email/%s.html.twig', $post->getType());
 
@@ -166,7 +166,6 @@ class PostController extends AbstractController
 
         $email = (new TemplatedEmail())
             ->from('no-reply@bda-ig2i.com')
-            ->to('ryan@example.com')
             ->subject($post->getTitle())
             ->htmlTemplate($emailTemplate)
             ->context([
@@ -175,6 +174,10 @@ class PostController extends AbstractController
                 'description' => $post->getDescription(),
                 'soundcloud' => $post->getSoundcloud(),
             ]);
+
+        foreach ($mailingList as $userEmail) {
+            $email->addTo($userEmail);
+        }
 
         if ('podcast' !== $post->getType()) {
             $email->attachFromPath(
