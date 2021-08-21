@@ -152,7 +152,7 @@ class PostController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    public function broadcastMail(Post $post, MailerInterface $mailer)
+public function broadcastMail(Post $post, MailerInterface $mailer)
     {
         $emailTemplate = sprintf('email/%s.html.twig', $post->getType());
 
